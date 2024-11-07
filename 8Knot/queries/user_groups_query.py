@@ -1,10 +1,6 @@
 import logging
 from app import celery_app, augur
-import pandas as pd
-from cache_manager.cache_manager import CacheManager as cm
-import io
-import datetime as dt
-from sqlalchemy.exc import SQLAlchemyError
+import app
 import redis
 import json
 import os
@@ -137,7 +133,7 @@ def parse_repolist(repo_list, prepend_to_url=""):
             continue
 
         # translate that natural key to the repo's ID in the primary database
-        repo_id_translated = augur.repo_git_to_id(prepend_to_url + repo_url)
+        repo_id_translated = app.msoh.repo_git_to_id(prepend_to_url + repo_url)
 
         # check if the translation worked.
         if not repo_id_translated:

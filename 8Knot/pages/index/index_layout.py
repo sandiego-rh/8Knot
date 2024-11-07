@@ -2,9 +2,11 @@ from dash import html, dcc
 import dash
 import dash_bootstrap_components as dbc
 import dash_mantine_components as dmc
+import app
 from app import augur
 import os
 import logging
+import _multiselect
 
 # if param doesn't exist, default to False. Otherwise, use the param's booly value.
 # this determines if the log in option will be shown or not
@@ -90,7 +92,11 @@ navbar = dbc.Navbar(
                             dbc.Nav(
                                 [
                                     dbc.NavLink("Welcome", href="/", active="exact"),
-                                    dbc.NavLink("Repo Overview", href="/repo_overview", active="exact"),
+                                    dbc.NavLink(
+                                        "Repo Overview",
+                                        href="/repo_overview",
+                                        active="exact",
+                                    ),
                                     dbc.NavLink(
                                         "Contributions",
                                         href="/contributions",
@@ -184,12 +190,14 @@ search_bar = html.Div(
                         dmc.MultiSelect(
                             id="projects",
                             searchable=True,
+                            placeholder="Please select a repository or an organization.",
                             clearable=True,
-                            nothingFound="No matching repos/orgs.",
+                            nothingFound="No repositories matching your input!",
                             variant="filled",
-                            debounce=100,
-                            data=[augur.initial_multiselect_option()],
-                            value=[augur.initial_multiselect_option()["value"]],
+                            debounce=0.5,
+                            data=app.msoh.all_options(),
+                            value=app.msoh.initial_option(),
+                            limit=100,
                             style={"fontSize": 16},
                         ),
                         dbc.Alert(

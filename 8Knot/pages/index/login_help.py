@@ -2,6 +2,7 @@ import re
 from datetime import datetime
 import logging
 from app import augur
+import app
 
 
 def verify_previous_login_credentials(bearer_token, refresh_token, expiration):
@@ -162,7 +163,7 @@ def parse_repolist(repo_list, prepend_to_url=""):
             continue
 
         # translate that natural key to the repo's ID in the primary database
-        repo_id_translated = augur.repo_git_to_id(prepend_to_url + repo_url)
+        repo_id_translated = app.msoh.repo_git_to_id(prepend_to_url + repo_url)
 
         # check if the translation worked.
         if not repo_id_translated:

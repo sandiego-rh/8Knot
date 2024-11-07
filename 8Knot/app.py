@@ -15,14 +15,18 @@ import os
 import sys
 import logging
 import dash
+import sqlalchemy as salc
 from sqlalchemy.exc import SQLAlchemyError
 import plotly.io as plt_io
 import dash_bootstrap_components as dbc
 import dash_bootstrap_templates as dbt
 from db_manager.augur_manager import AugurManager
 import _login
+import _multiselect
 from _celery import celery_app, celery_manager
 import _bots as bots
+import pandas as pd
+import models
 
 logging.basicConfig(format="%(asctime)s %(levelname)-8s %(message)s", level=logging.INFO)
 
@@ -42,8 +46,10 @@ except KeyError:
 except SQLAlchemyError:
     sys.exit(1)
 
+
 # grab list of projects and orgs from Augur database.
-augur.multiselect_startup()
+# augur.multiselect_startup()
+msoh = _multiselect.MSOptionsHandler(models.engine)
 
 
 """IMPORT AFTER GLOBAL VARIABLES SET"""
