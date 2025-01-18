@@ -15,6 +15,7 @@ from .visualizations.pr_assignment import gc_pr_assignment
 from .visualizations.cntrb_pr_assignment import gc_cntrib_pr_assignment
 from .visualizations.pr_first_response import gc_pr_first_response
 from .visualizations.pr_review_response import gc_pr_review_response
+from .visualizations.issue_pr_survival import gc_issue_pr_survival
 
 warnings.filterwarnings("ignore")
 
@@ -65,6 +66,7 @@ layout = dbc.Container(
         dbc.Row(
             [
                 dbc.Col(gc_pr_review_response, width=6),
+                dbc.Col(gc_issue_pr_survival, width=6),
             ],
             align="center",
             style={"marginBottom": ".5%"},
